@@ -59,7 +59,7 @@ export const store = new Vuex.Store({
         data: JSON.stringify(this.state.tasks[id]),
         headers: {
           Authorization : AUTHORIZATION,
-          'Content-Type': `application/json`
+          'Content-Type': `application/json`,
         }}).then(response => (dispatch('createTasks',response.data))).catch(error => console.log(error));
     },
     crateTask ({dispatch}) {
@@ -70,7 +70,7 @@ export const store = new Vuex.Store({
         data: JSON.stringify({ "id": "0", "description": "new task", "due_date": "2019-11-22T10:52:26.006Z", "tags": [], "repeating_days": { "mo": false, "tu": false, "we": false, "th": false, "fr": false, "sa": false, "su": false }, "color": "black", "is_favorite": false, "is_archived": false }),
         headers: {
           Authorization : AUTHORIZATION,
-          'Content-Type': `application/json`
+          'Content-Type': `application/json`,
         }}).then(response => (dispatch('createTasks',response.data))).catch(error => console.log(error));
     }
   }
