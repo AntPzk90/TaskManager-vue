@@ -24,7 +24,7 @@
         </div>
 
         <div class="card__textarea-wrap">
-          <p class="card__text">{{descriptionTask}}</p>
+          <p class="card__text">{{descriptionTask}} {{idTask}}</p>
         </div>
 
         <div class="card__settings">
@@ -238,7 +238,7 @@
           </div>
 
           <div class="card__status-btns">
-            <button class="card__save" type="submit" @click.prevent = "saveData(indexTask, indexTask)">save</button>
+            <button class="card__save" type="submit" @click.prevent = "saveData(id)">save</button>
             <button class="card__delete" type="button">delete</button>
           </div>
         </div>
@@ -248,9 +248,10 @@
 
 <script>
   export default {
-    props:['description', 'color', 'data', 'tags', 'repeatingDays', 'index', 'isArchived'],
+    props:['id', 'description', 'color', 'data', 'tags', 'repeatingDays', 'index', 'isArchived'],
     data () {
       return {
+        idTask: this.id,
         newHashtag: null,
         cardEdit: true,
         isArchivedTask: this.isArchived,
@@ -324,7 +325,6 @@
         this.$store.commit('changeArhivedState', isArchived);
       },
       changeRepeatingDayFlag (name, index) {
-        console.log(name)
         if(!this.repeatingDaysTask[name]){
           this.repeatingDaysTask[name] = true;
         }else if(this.repeatingDaysTask[name]){
@@ -338,24 +338,28 @@
         this.$store.commit('changeDayRepeatState', dayRepeatData);
       },
       crateNewHashTag (indexTask) {
+        let newHashtagsArray = this.tagsTask;
+        newHashtagsArray.push(this.newHashtag)
         let hashtagsData = {
-          hashTag: this.newHashtag,
+          hashTagsArray: newHashtagsArray,
           index: this.indexTask,
         }
-        this.$store.commit('addNewHashtag', hashtagsData);
+        this.tagsTask = newHashtagsArray;
+        this.$store.commit('deleteAndAddHashtag', hashtagsData);
       },
       deleteHashtag (index, indexTask) {
         let newHashtagsArray = this.tagsTask.concat();
         newHashtagsArray.splice(index,1);
         let deletedHashtagData = {
-          newArray: newHashtagsArray,
+          hashTagsArray: newHashtagsArray,
           index: indexTask,
         }
         this.tagsTask = newHashtagsArray;
-        this.$store.commit('deleteHashtag', deletedHashtagData);
+        this.$store.commit('deleteAndAddHashtag', deletedHashtagData);
       },
-      saveData (index) {
-        this.$store.dispatch('updateTask', index);
+      saveData (id) {
+        console.log(id)
+        this.$store.dispatch('updateTask', id);
         this.cardEdit = true;
       }
     },

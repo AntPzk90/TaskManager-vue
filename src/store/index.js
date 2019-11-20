@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
   },
   mutations: {
     pushDatainTasks (state, payload) {
-      state.tasks = payload;
+      state.tasks = payload.reverse();
     },
     updateTasks (state, payload) {
       state.tasks = payload
@@ -32,18 +32,14 @@ export const store = new Vuex.Store({
     changeDayRepeatState (state, payload) {
       state.tasks[payload.index].repeating_days[payload.dayRepeat] = payload.dayState;
     },
-    addNewHashtag (state, payload) {
-      console.log(state.tasks[payload.index])
-      state.tasks[payload.index].tags.push(payload.hashTag);
-    },
-    deleteHashtag (state, payload) {
+    deleteAndAddHashtag (state, payload) {
       console.log(payload)
-      state.tasks[payload.index].tags = payload.newArray;
+      state.tasks[payload.index].tags = payload.hashTagsArray;
     }
   },
   actions: {
     createTasks ({commit}) {
-      const AUTHORIZATION = `Basic kTy9gIdsz2615xrD`;
+      const AUTHORIZATION = `Basic kTy9gIdsz2616xxrD`;
       axios({
         method: 'get',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks',
@@ -52,7 +48,7 @@ export const store = new Vuex.Store({
         }}).then(response => (commit('pushDatainTasks', response.data))).catch(error => console.log(error));
     },
     updateTask({dispatch}, id) {
-      const AUTHORIZATION = `Basic kTy9gIdsz2615xrD`;
+      const AUTHORIZATION = `Basic kTy9gIdsz2616xxrD`;
       axios({
         method: 'put',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks/' + id,
@@ -63,7 +59,7 @@ export const store = new Vuex.Store({
         }}).then(response => (dispatch('createTasks',response.data))).catch(error => console.log(error));
     },
     crateTask ({dispatch}) {
-      const AUTHORIZATION = `Basic kTy9gIdsz2615xrD`;
+      const AUTHORIZATION = `Basic kTy9gIdsz2616xxrD`;
       axios({
         method: 'post',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks/',
