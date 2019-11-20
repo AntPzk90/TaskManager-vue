@@ -48,7 +48,7 @@
     },
     computed: {
       tasks () {
-        return this.$store.getters.tasks;
+        return this.$store.getters.tasks.reverse();
       }
     },
     mounted() {
