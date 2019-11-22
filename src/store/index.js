@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
+
 const axios = require('axios');
 
 export const store = new Vuex.Store({
