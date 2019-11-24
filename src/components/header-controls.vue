@@ -41,7 +41,8 @@
     },
     methods: {
       createTask () {
-        this.$store.dispatch('crateTask');
+        const newId = this.$store.state.tasks.length.toString();
+        this.$store.dispatch('crateTask', newId);
       }
     }
   }

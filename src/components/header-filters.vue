@@ -8,7 +8,7 @@
       checked
     />
     <label for="filter__all" class="filter__label">
-      All <span class="filter__all-count">13</span></label
+      All <span class="filter__all-count">{{getAllTasksCount}}</span></label
     >
     <input
       type="radio"
@@ -37,7 +37,7 @@
       name="filter"
     />
     <label for="filter__favorites" class="filter__label"
-      >Favorites <span class="filter__favorites-count">1</span></label
+      >Favorites <span class="filter__favorites-count">{{getAllFavoritesTasksCount}}</span></label
     >
     <input
       type="radio"
@@ -46,7 +46,7 @@
       name="filter"
     />
     <label for="filter__repeating" class="filter__label"
-      >Repeating <span class="filter__repeating-count">1</span></label
+      >Repeating <span class="filter__repeating-count">{{getAllRepeatingTasksCount}}</span></label
     >
     <input
       type="radio"
@@ -55,7 +55,7 @@
       name="filter"
     />
     <label for="filter__tags" class="filter__label"
-      >Tags <span class="filter__tags-count">1</span></label
+      >Tags <span class="filter__tags-count">{{getAllTagsTasksCount}}</span></label
     >
     <input
       type="radio"
@@ -64,7 +64,7 @@
       name="filter"
     />
     <label for="filter__archive" class="filter__label"
-      >Archive <span class="filter__archive-count">115</span></label
+      >Archive <span class="filter__archive-count">{{getAllArchivedTasksCount}}</span></label
     >
   </section>
 </template>
@@ -74,6 +74,70 @@
     data () {
       return {
 
+      }
+    },
+    computed: {
+      getAllTasksCount () {
+        if(this.$store.getters.tasks){
+          return this.$store.getters.tasks.length
+        }else{
+          return 'loading'
+        }
+      },
+      getAllFavoritesTasksCount () {
+        if(this.$store.getters.tasks){
+          let count = 0;
+          for(let task of this.$store.getters.tasks){
+            if(task.is_favorite){
+              count++
+            }
+          }
+          return count
+        }else{
+          return 'loading'
+        }
+      },
+      getAllRepeatingTasksCount () {
+        if(this.$store.getters.tasks){
+          let count = 0;
+          for(let task of this.$store.getters.tasks){
+            for(let repeatingTask in task.repeating_days){
+              if(task.repeating_days[repeatingTask]){
+                count ++
+                break
+              }
+            }
+          }
+          return count
+        }else{
+          return 'loading'
+        }
+      },
+      getAllTagsTasksCount () {
+        if(this.$store.getters.tasks){
+          let count = 0;
+          for(let task of this.$store.getters.tasks){
+            if(task.tags.length != 0){
+              count++
+            }
+          }
+          return count
+        }else{
+          return 'loading'
+        }
+      },
+      getAllArchivedTasksCount () {
+        if(this.$store.getters.tasks){
+          let count = 0;
+          for(let task of this.$store.getters.tasks){
+            if(task.is_archived){
+              count++
+            }
+          }
+          return count
+        }else{
+          return 'loading'
+        }
       }
     }
   }

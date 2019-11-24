@@ -20,8 +20,6 @@
 </template>
 
 <script>
-  const axios = require('axios');
-
   import {store} from './store/index';
   import {router} from './routes';
   //components import
