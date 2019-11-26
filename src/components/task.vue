@@ -1,13 +1,13 @@
 <template>
 <transition name="fade">
-  <article class="card" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-if = "cardEdit" key = "1">
+  <article class="card" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-if = "cardEdit" v-show = "!isArchived" key = "1">
     <div class="card__form">
       <div class="card__inner">
         <div class="card__control">
           <button type="button" class="card__btn card__btn--edit" @click = "changeEditFlag">
             edit
           </button>
-          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag (index)">
+          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)">
             archive
           </button>
           <button
@@ -54,7 +54,7 @@
     </div>
   </article>
 
-  <article class="card card--edit" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-else key = "2">
+  <article class="card card--edit" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-else v-show = "!isArchived" key = "2">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
@@ -336,6 +336,7 @@
          this.$store.commit('changeDescription', descriptionData);
       },
       changeArchivedFlag (index) {
+        console.log(this.isArchivedTask)
         if(this.isArchivedTask == false){
           this.isArchivedTask = true;
         }else if(this.isArchivedTask){
