@@ -14,16 +14,10 @@ export const store = new Vuex.Store({
     tasks (state) {
       return state.tasks;
     },
-    default (state) {
-      return state.default;
-    }
   },
   mutations: {
     pushDatainTasks (state, payload) {
       state.tasks = payload;
-    },
-    pushDefault (state, payload) {
-      state.default = payload;
     },
     updateTasks (state, payload) {
       state.tasks = payload
@@ -56,7 +50,7 @@ export const store = new Vuex.Store({
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks',
         headers: {
           Authorization : AUTHORIZATION,
-        }}).then(response => (commit('pushDatainTasks', response.data),commit('pushDefault', response.data)))
+        }}).then(response => (commit('pushDatainTasks', response.data)))
            .catch(error => console.log(error));
     },
     updateTask({dispatch}, payload) {

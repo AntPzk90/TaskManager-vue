@@ -409,11 +409,12 @@
 
 <style>
   .fade-enter-active {
-   transform: rotate3d(2,3,4,0deg);
+    transform: scale3d(1,1.2,1.2);
     transition: transform .2s;
+    z-index: 100;
   }
   .fade-enter /* .fade-leave-active до версии 2.1.8 */ {
-    transform: rotate3d(1,1,1,-360deg);
+    transform: scale3d(1,0.1,0.1);
   }
   .mx-datepicker {
       position: relative;

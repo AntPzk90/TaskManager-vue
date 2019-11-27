@@ -39,46 +39,34 @@
         return this.$store.getters.tasks
       },
       default() {
-        return this.$store.getters.default
+        return this.$store.getters.default.slice()
       }
     },
     methods: {
       sort (type) {
         let sortType = type;
         let defaultTasks = this.tasks.slice();
-        console.log(this.default, `def`)
         switch(sortType){
           case 'default-sort':
-            for (let [index, task] of defaultTasks.entries()){
-              this.tasks[index] = task;
+            let sortedTasksDefult = this.tasks.slice().sort((a, b) => a.id - b.id);
+            for (let [index, task] of sortedTasksDefult.entries()){
+              this.$set(this.tasks, index, task)
             }
             break;
           case 'up-sort':
             let sortedTasksUp = this.tasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
             for (let [index, task] of sortedTasksUp.entries()){
-              Vue.set(this.tasks, index, task);
+              this.$set(this.tasks, index, task);
             }
             break;
           case 'down-sort':
             let sortedTasksDown = this.tasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
             for (let [index, task] of sortedTasksDown.entries()){
-              Vue.set(this.tasks, index, task);
+              this.$set(this.tasks, index, task);
             }
             break;
         }
       },
-      sortUp () {
-        console.log(this.$refs.a.dataset.filter)
-        // let sortedTasks = this.tasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
-        // this.$store.commit('pushDatainTasks', sortedTasks);
-      },
-      sortDown () {
-        let sortedTasks = this.tasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
-        this.$store.commit('pushDatainTasks', sortedTasks);
-      },
-      sortDefault () {
-        this.$store.dispatch('createTasks');
-      }
     }
   }
 </script>
