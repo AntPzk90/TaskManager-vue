@@ -127,12 +127,15 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 500;
+  color: inherit;
+  text-decoration: none;
 }
 .filter__label:hover {
   opacity: 0.7;
   transition: opacity 0.2s ease-out;
 }
-.filter__input:not(:disabled):checked + .filter__label {
+.filter__input:not(:disabled):checked + .filter__label,
+.filter__label--active {
   text-shadow: 1px 0 0 #000000;
 }
 .filter__input:not(:disabled):checked + .filter__label:hover {

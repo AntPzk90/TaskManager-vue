@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     tasks: null,
     archiveTasks: null,
     repeatingTasks: null,
+    tagsTasks: null,
   },
   getters: {
     tasks (state) {
@@ -18,48 +19,32 @@ export const store = new Vuex.Store({
     archiveTasks (state) {
       return state.archiveTasks;
     },
+    repeatingTasks (state) {
+      return state.repeatingTasks;
+    },
+    tagsTasks (state) {
+      return state.tagsTasks
+    }
   },
   mutations: {
 
     pushDatainTasks (state, payload) {
-      state.tasks = payload;
+      state.tasks = payload.filter(task => task.is_archived == false);
       state.archiveTasks = payload.filter(task => task.is_archived);
       function getAllRepeatingTasks () {
           let repeatingTasks = [];
-          for(let task of payload){
+          for(let task of state.tasks){
             for(let repeatingTask in task.repeating_days){
               if(task.repeating_days[repeatingTask]){
-                repeatingTasks.push(task.repeating_days)
+                repeatingTasks.push(task)
+                break
               }
             }
           }
           return repeatingTasks
       }
       state.repeatingTasks = getAllRepeatingTasks();
-    },
-    // pushDatainArchivedTasks (state, payload) {
-    //   state.archiveTasks = payload.filter(task => task.is_archived);
-    // },
-    updateTasks (state, payload) {
-      state.tasks = payload
-    },
-    changeColor (state, payload) {
-      state.tasks[payload.index].color = payload.color;
-    },
-    changeDescription (state, payload) {
-      state.tasks[payload.index].description = payload.description;
-    },
-    changeArhivedState (state, payload) {
-      state.tasks[payload.index].is_archived = payload.isArchived;
-    },
-    changeDayRepeatState (state, payload) {
-      state.tasks[payload.index].repeating_days[payload.dayRepeat] = payload.dayState;
-    },
-    deleteAndAddHashtag (state, payload) {
-      state.tasks[payload.index].tags = payload.hashTagsArray;
-    },
-    changeDate (state, payload) {
-      state.tasks[payload.index].due_date = payload.date;
+      state.tagsTasks = state.tasks.filter(task => task.tags.length != 0);
     },
   },
   actions: {

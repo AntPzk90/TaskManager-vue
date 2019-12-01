@@ -7,7 +7,7 @@
     </div>
 
     <div class="board__tasks">
-      <task-card v-for = "(task, index) in archiveTasks" :key = "task.id"
+      <task-card v-for = "(task, index) in tagsTasks" :key = "task.id"
                                                   :index = "index"
                                                   :id = "task.id"
                                                   :description = "task.description"
@@ -40,7 +40,7 @@
     },
     computed: {
       ...mapGetters([
-        'archiveTasks',
+        'tagsTasks',
       ]),
     },
     methods: {

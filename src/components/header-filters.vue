@@ -1,6 +1,6 @@
 <template>
   <section class="main__filter filter container">
-    <input
+    <!-- <input
       type="radio"
       id="filter__all"
       class="filter__input visually-hidden"
@@ -9,7 +9,11 @@
     />
     <label for="filter__all" class="filter__label">
       All <span class="filter__all-count">{{getAllTasksCount}}</span></label
-    >
+    > -->
+    <router-link to="/all" class="filter__label">
+      <a class="filter__label">All</a>
+      <span class="filter__all-count">{{getAllTasksCount}}</span>
+    </router-link>
     <input
       type="radio"
       id="filter__overdue"
@@ -39,7 +43,7 @@
     <label for="filter__favorites" class="filter__label"
       >Favorites <span class="filter__favorites-count">{{getAllFavoritesTasksCount}}</span></label
     >
-    <input
+    <!-- <input
       type="radio"
       id="filter__repeating"
       class="filter__input visually-hidden"
@@ -47,8 +51,13 @@
     />
     <label for="filter__repeating" class="filter__label"
       >Repeating <span class="filter__repeating-count">{{getAllRepeatingTasksCount}}</span></label
-    >
-    <input
+    > -->
+    <router-link to="/repeating" class="filter__label">
+      <a class="filter__label">Repeating</a>
+      <span class="filter__all-count">{{getAllRepeatingTasksCount}}</span>
+    </router-link>
+
+    <!-- <input
       type="radio"
       id="filter__tags"
       class="filter__input visually-hidden"
@@ -56,8 +65,12 @@
     />
     <label for="filter__tags" class="filter__label"
       >Tags <span class="filter__tags-count">{{getAllTagsTasksCount}}</span></label
-    >
-    <input
+    > -->
+    <router-link to="/tags" class="filter__label">
+      <a class="filter__label">Tags</a>
+      <span class="filter__all-count">{{getAllTagsTasksCount}}</span>
+    </router-link>
+    <!-- <input
       type="radio"
       id="filter__archive"
       class="filter__input visually-hidden"
@@ -65,12 +78,10 @@
     />
     <label for="filter__archive" class="filter__label"
       >Archive <span class="filter__archive-count">{{getAllArchivedTasksCount}}</span></label
-    >
-    <router-link to="/archive">
-      <a>archived-link</a>
-    </router-link>
-    <router-link to="/all">
-      <a>all</a>
+    > -->
+    <router-link to="/archive" class="filter__label">
+      <a class="filter__label">Archive</a>
+      <span class="filter__all-count">{{getAllArchivedTasksCount}}</span>
     </router-link>
   </section>
 </template>
@@ -133,14 +144,8 @@
         }
       },
       getAllArchivedTasksCount () {
-        if(this.$store.getters.tasks){
-          let count = 0;
-          for(let task of this.$store.getters.tasks){
-            if(task.is_archived){
-              count++
-            }
-          }
-          return count
+        if(this.$store.getters.archiveTasks){
+          return this.$store.getters.archiveTasks.length;
         }else{
           return 'loading'
         }

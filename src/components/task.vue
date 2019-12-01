@@ -8,7 +8,7 @@
             edit
           </button>
           <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)" @click.prevent = "saveData(id)">
-            archive
+            {{archivedState}}
           </button>
           <button
             type="button"
@@ -58,7 +58,7 @@
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
-          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)" @click.prevent = "saveData(id)">
+          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(id)" @click.prevent = "saveData(id)">
             archive
           </button>
           <button
@@ -258,7 +258,7 @@
     components: {
       DatePicker
     },
-    props:['id', 'description', 'color', 'date', 'tags', 'repeatingDays', 'index', 'isArchived', 'isFavorite'],
+    props:['id', 'description', 'color', 'date', 'tags', 'repeatingDays', 'index', 'isArchived', 'isFavorite',],
     data () {
       return {
         dateTask: this.date,
@@ -315,6 +315,13 @@
       },
       getTime () {
         return moment(this.dateTask).format('LT')
+      },
+      archivedState () {
+        if(this.isArchivedTask){
+          return 'dearchive'
+        } else {
+          return 'archive'
+        }
       }
     },
     methods: {
@@ -327,14 +334,12 @@
           index:index,
         }
         this.colorTask = colorData.color;
-        this.$store.commit('changeColor', colorData);
       },
       changeText (index) {
         let descriptionData = {
           description: this.descriptionTask,
           index:index,
         }
-         this.$store.commit('changeDescription', descriptionData);
       },
       changeArchivedFlag (index) {
         console.log(this.isArchivedTask)
@@ -347,7 +352,6 @@
           isArchived: this.isArchivedTask,
           index:index,
         }
-        this.$store.commit('changeArhivedState', isArchived);
       },
       changeRepeatingDayFlag (name, index) {
         if(!this.repeatingDaysTask[name]){
@@ -360,7 +364,6 @@
           dayState: this.repeatingDaysTask[name],
           index:index,
         }
-        this.$store.commit('changeDayRepeatState', dayRepeatData);
       },
       crateNewHashTag (indexTask) {
         let newHashtagsArray = this.tagsTask;
@@ -370,7 +373,6 @@
           index: this.indexTask,
         }
         this.tagsTask = newHashtagsArray;
-        this.$store.commit('deleteAndAddHashtag', hashtagsData);
       },
       deleteHashtag (index, indexTask) {
         let newHashtagsArray = this.tagsTask.concat();
@@ -380,10 +382,16 @@
           index: indexTask,
         }
         this.tagsTask = newHashtagsArray;
-        this.$store.commit('deleteAndAddHashtag', deletedHashtagData);
+      },
+      changeDate (indexTask) {
+        const date = moment(this.newDateTask).toISOString();
+        this.dateTask = date;
+        let dateData = {
+          date: date,
+          index: indexTask,
+        }
       },
       saveData (id) {
-        console.log(this.colorTask)
         const updateData = {
           id: id,
           object: {
@@ -404,15 +412,6 @@
         this.$store.dispatch('deleteTask', id);
         this.cardEdit = true;
       },
-      changeDate (indexTask) {
-        const date = moment(this.newDateTask).toISOString();
-        this.dateTask = date;
-        let dateData = {
-          date: date,
-          index: indexTask,
-        }
-       this.$store.commit('changeDate', dateData);
-      }
     },
   }
 </script>

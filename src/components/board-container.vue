@@ -16,8 +16,7 @@
                                                   :tags = "task.tags"
                                                   :repeatingDays = "task.repeating_days"
                                                   :isArchived = "task.is_archived"
-                                                  :isFavorite = "task.is_favorite"
-                                                  >
+                                                  :isFavorite = "task.is_favorite">
       </task-card>
     </div>
   </section>
