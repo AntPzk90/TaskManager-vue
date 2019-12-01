@@ -1,13 +1,13 @@
 <template>
 <transition name="fade">
-  <article class="card" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-if = "cardEdit" v-show = "!isArchived" key = "1">
+  <article class="card" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-if = "cardEdit" key = "1">
     <div class="card__form">
       <div class="card__inner">
         <div class="card__control">
           <button type="button" class="card__btn card__btn--edit" @click = "changeEditFlag">
             edit
           </button>
-          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)">
+          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)" @click.prevent = "saveData(id)">
             archive
           </button>
           <button
@@ -54,11 +54,11 @@
     </div>
   </article>
 
-  <article class="card card--edit" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-else v-show = "!isArchived" key = "2">
+  <article class="card card--edit" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-else  key = "2">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
-          <button type="button" class="card__btn card__btn--archive">
+          <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)" @click.prevent = "saveData(id)">
             archive
           </button>
           <button
@@ -241,7 +241,7 @@
         </div>
 
         <div class="card__status-btns">
-          <button class="card__save" type="submit" @click.prevent = "saveData">save</button>
+          <button class="card__save" type="submit" @click.prevent = "saveData(id)">save</button>
           <button class="card__delete" type="button" @click = "deleteTask(id)">delete</button>
         </div>
       </div>
@@ -258,7 +258,7 @@
     components: {
       DatePicker
     },
-    props:['id', 'description', 'color', 'date', 'tags', 'repeatingDays', 'index', 'isArchived'],
+    props:['id', 'description', 'color', 'date', 'tags', 'repeatingDays', 'index', 'isArchived', 'isFavorite'],
     data () {
       return {
         dateTask: this.date,
@@ -271,6 +271,7 @@
         colorTask: this.color,
         tagsTask: this.tags,
         repeatingDaysTask: this.repeatingDays,
+        isFavoriteTask: this.isFavorite,
         colors: {
           'yellow': 'card--yellow',
           'blue': 'card--blue',
@@ -349,7 +350,6 @@
         this.$store.commit('changeArhivedState', isArchived);
       },
       changeRepeatingDayFlag (name, index) {
-        console.log(this.repeatingDaysTask)
         if(!this.repeatingDaysTask[name]){
           this.repeatingDaysTask[name] = true;
         }else if(this.repeatingDaysTask[name]){
@@ -382,10 +382,20 @@
         this.tagsTask = newHashtagsArray;
         this.$store.commit('deleteAndAddHashtag', deletedHashtagData);
       },
-      saveData () {
+      saveData (id) {
+        console.log(this.colorTask)
         const updateData = {
-          id: this.idTask,
-          index: this.indexTask,
+          id: id,
+          object: {
+            "id": this.idTask,
+            "description": this.descriptionTask,
+            "due_date": this.dateTask,
+            "tags": this.tagsTask,
+            "repeating_days":this.repeatingDaysTask,
+            "color": this.colorTask,
+            "is_favorite": this.isFavoriteTask,
+            "is_archived": this.isArchivedTask,
+          }
         }
         this.$store.dispatch('updateTask', updateData);
         this.cardEdit = true;

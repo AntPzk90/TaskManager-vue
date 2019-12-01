@@ -66,6 +66,12 @@
     <label for="filter__archive" class="filter__label"
       >Archive <span class="filter__archive-count">{{getAllArchivedTasksCount}}</span></label
     >
+    <router-link to="/archive">
+      <a>archived-link</a>
+    </router-link>
+    <router-link to="/all">
+      <a>all</a>
+    </router-link>
   </section>
 </template>
 

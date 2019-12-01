@@ -9,8 +9,11 @@
     <header-filters>
     </header-filters>
 
-    <board-container>
-    </board-container>
+    <!-- <board-container>
+    </board-container> -->
+    <!-- <board-container-archive>
+    </board-container-archive> -->
+    <router-view></router-view>
     <ul>
       <li v-for = "(item, index) in tasks" :key = "index">
         {{ item }}
@@ -27,6 +30,7 @@
   import headerSearch from './components/header-search';
   import headerFilters from './components/header-filters';
   import boardContainer from './components/board-container';
+  import boardContainerArchive from './components/board-container-archive';
 
 
   export default {
@@ -38,6 +42,7 @@
       headerSearch,
       headerFilters,
       boardContainer,
+      boardContainerArchive,
     },
     data () {
       return {

@@ -7,7 +7,7 @@
     </div>
 
     <div class="board__tasks">
-      <task-card v-for = "(task, index) in tasks" :key = "task.id"
+      <task-card v-for = "(task, index) in archiveTasks" :key = "task.id"
                                                   :index = "index"
                                                   :id = "task.id"
                                                   :description = "task.description"
@@ -36,11 +36,12 @@
     },
     data () {
       return {
+        dataTasks: null,
       }
     },
     computed: {
       ...mapGetters([
-        'tasks',
+        'archiveTasks',
       ]),
     },
     methods: {
@@ -48,21 +49,22 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-          let sortedTasksDefult = this.tasks.slice().sort((a, b) => a.id - b.id);
+            let sortedTasksDefult = this.archiveTasks.slice().sort((a, b) => a.id - b.id);
             for (let [index, task] of sortedTasksDefult.entries()){
-              this.$set(this.tasks, index, task)
+              this.$set(this.archiveTasks, index, task)
             }
             break;
           case 'up-sort':
-            let sortedTasksUp = this.tasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
+            let sortedTasksUp = this.archiveTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
             for (let [index, task] of sortedTasksUp.entries()){
-              this.$set(this.tasks, index, task);
+              this.$set(this.archiveTasks, index, task)
             }
             break;
           case 'down-sort':
-            let sortedTasksDown = this.tasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
+            console.log(this.archiveTasks)
+            let sortedTasksDown = this.archiveTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
             for (let [index, task] of sortedTasksDown.entries()){
-              this.$set(this.tasks, index, task);
+              this.$set(this.archiveTasks, index, task);
             }
             break;
         }

@@ -7,18 +7,39 @@ const axios = require('axios');
 
 export const store = new Vuex.Store({
   state: {
-    default:null,
     tasks: null,
+    archiveTasks: null,
+    repeatingTasks: null,
   },
   getters: {
     tasks (state) {
       return state.tasks;
     },
+    archiveTasks (state) {
+      return state.archiveTasks;
+    },
   },
   mutations: {
+
     pushDatainTasks (state, payload) {
       state.tasks = payload;
+      state.archiveTasks = payload.filter(task => task.is_archived);
+      function getAllRepeatingTasks () {
+          let repeatingTasks = [];
+          for(let task of payload){
+            for(let repeatingTask in task.repeating_days){
+              if(task.repeating_days[repeatingTask]){
+                repeatingTasks.push(task.repeating_days)
+              }
+            }
+          }
+          return repeatingTasks
+      }
+      state.repeatingTasks = getAllRepeatingTasks();
     },
+    // pushDatainArchivedTasks (state, payload) {
+    //   state.archiveTasks = payload.filter(task => task.is_archived);
+    // },
     updateTasks (state, payload) {
       state.tasks = payload
     },
@@ -35,7 +56,6 @@ export const store = new Vuex.Store({
       state.tasks[payload.index].repeating_days[payload.dayRepeat] = payload.dayState;
     },
     deleteAndAddHashtag (state, payload) {
-      console.log(payload)
       state.tasks[payload.index].tags = payload.hashTagsArray;
     },
     changeDate (state, payload) {
@@ -44,29 +64,28 @@ export const store = new Vuex.Store({
   },
   actions: {
     createTasks ({commit}) {
-      const AUTHORIZATION = `Basic kTy9gIdsz2617xxrD`;
+      const AUTHORIZATION = `Basic kTy9gIdsz217xxrD`;
       axios({
         method: 'get',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks',
         headers: {
           Authorization : AUTHORIZATION,
         }}).then(response => (commit('pushDatainTasks', response.data)))
-           .catch(error => console.log(error));
+           .catch(error => console.log(error,`error`));
     },
     updateTask({dispatch}, payload) {
-      console.log(payload)
-      const AUTHORIZATION = `Basic kTy9gIdsz2617xxrD`;
+      const AUTHORIZATION = `Basic kTy9gIdsz217xxrD`;
       axios({
         method: 'put',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks/' + payload.id,
-        data: JSON.stringify(this.getters.tasks[payload.index]),
+        data: JSON.stringify(payload.object),
         headers: {
           Authorization : AUTHORIZATION,
           'Content-Type': `application/json`,
         }}).then(response => (dispatch('createTasks', response.data))).catch(error => console.log(error));
     },
     crateTask ({dispatch}, id) {
-      const AUTHORIZATION = `Basic kTy9gIdsz2617xxrD`;
+      const AUTHORIZATION = `Basic kTy9gIdsz217xxrD`;
       console.log(id)
       axios({
         method: 'post',
@@ -93,7 +112,7 @@ export const store = new Vuex.Store({
         }}).then(response => (dispatch('createTasks', response.data))).catch(error => console.log(error));
     },
     deleteTask ({dispatch}, id) {
-      const AUTHORIZATION = `Basic kTy9gIdsz2617xxrD`
+      const AUTHORIZATION = `Basic kTy9gIdsz217xxrD`
       axios({
         method: 'DELETE',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks/' + id,

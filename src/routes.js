@@ -8,8 +8,24 @@ Vue.use(vueDebounce, {
 })
 
 import {store} from './store/index';
-
-const routes = [];
+import boardContainer from './components/board-container';
+import boardContainerArchive from './components/board-container-archive'
+const routes = [
+  {
+		path: '',
+		redirect: {name: 'allTasks'}
+	},
+	{
+    name: 'allTasks',
+		path: '/all',
+		component: boardContainer,
+  },
+  {
+    name: 'archivedTasks',
+		path: '/archive',
+		component: boardContainerArchive,
+	}
+];
 
 export const router = new VueRouter({
 	routes,
