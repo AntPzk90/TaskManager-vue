@@ -29,8 +29,8 @@ export const store = new Vuex.Store({
   mutations: {
 
     pushDatainTasks (state, payload) {
-      state.tasks = payload.filter(task => task.is_archived == false);
-      state.archiveTasks = payload.filter(task => task.is_archived);
+      state.tasks = payload.filter(task => task.is_archived == false).sort((a, b) => b.id - a.id);
+      state.archiveTasks = payload.filter(task => task.is_archived).sort((a, b) => b.id - a.id);
       function getAllRepeatingTasks () {
           let repeatingTasks = [];
           for(let task of state.tasks){
@@ -41,10 +41,10 @@ export const store = new Vuex.Store({
               }
             }
           }
-          return repeatingTasks
+          return repeatingTasks.sort((a, b) => b.id - a.id)
       }
       state.repeatingTasks = getAllRepeatingTasks();
-      state.tagsTasks = state.tasks.filter(task => task.tags.length != 0);
+      state.tagsTasks = state.tasks.filter(task => task.tags.length != 0).sort((a, b) => b.id - a.id);
     },
   },
   actions: {

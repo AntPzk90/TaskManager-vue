@@ -601,7 +601,18 @@ body {
   color: #000000;
 }
 .card--edit .card__hashtag-input:focus {
+  transition: border .5s, color .3s;
   border-color: #0c5cdd;
+}
+.card--edit .card__hashtag-input--error:focus{
+  transition: border .5s, color .3s;
+  color: lightcoral;
+  border-color: lightcoral;
+}
+.card--edit .card__hashtag-input--error{
+  transition: border .5s, color .3s;
+  color: lightcoral;
+  border-color: lightcoral;
 }
 .card--edit .card__colors-inner {
   order: 3;

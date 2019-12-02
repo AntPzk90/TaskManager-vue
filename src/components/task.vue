@@ -144,7 +144,7 @@
                   <p class="card__hashtag-name">
                     #{{hashtag}}
                   </p>
-                  <button type="button" class="card__hashtag-delete" @click = "deleteHashtag(index, indexTask)">
+                  <button type="button" class="card__hashtag-delete" @click = "deleteHashtag(index, idTask)">
                     delete
                   </button>
                 </span>
@@ -154,6 +154,7 @@
                 <input
                   type="text"
                   class="card__hashtag-input"
+                  :class = "{'card__hashtag-input--error': hashTagError}"
                   name="hashtag-input"
                   placeholder="Type new hashtag here"
                   v-model = "newHashtag"
@@ -258,12 +259,13 @@
     components: {
       DatePicker
     },
-    props:['id', 'description', 'color', 'date', 'tags', 'repeatingDays', 'index', 'isArchived', 'isFavorite',],
+    props:['id', 'description', 'color', 'date', 'tags', 'repeatingDays', 'index', 'isArchived', 'isFavorite'],
     data () {
       return {
         dateTask: this.date,
         idTask: this.id,
         newHashtag: null,
+        hashTagError: false,
         cardEdit: true,
         isArchivedTask: this.isArchived,
         descriptionTask: this.description,
@@ -367,21 +369,27 @@
       },
       crateNewHashTag (indexTask) {
         let newHashtagsArray = this.tagsTask;
-        newHashtagsArray.push(this.newHashtag)
-        let hashtagsData = {
-          hashTagsArray: newHashtagsArray,
-          index: this.indexTask,
+        let reg = /^[a-z]{3,8}/;
+        if(reg.test(this.newHashtag)){
+          this.hashTagError = false;
+          newHashtagsArray.push(this.newHashtag)
+          let hashtagsData = {
+            hashTagsArray: newHashtagsArray,
+            index: this.indexTask,
+          }
+          this.tagsTask = newHashtagsArray;
+        } else {
+          this.hashTagError = true;
+          console.log(this.hashTagError)
         }
-        this.tagsTask = newHashtagsArray;
       },
       deleteHashtag (index, indexTask) {
-        let newHashtagsArray = this.tagsTask.concat();
+        let newHashtagsArray = this.tagsTask;
+        console.log(newHashtagsArray)
         newHashtagsArray.splice(index,1);
-        let deletedHashtagData = {
-          hashTagsArray: newHashtagsArray,
-          index: indexTask,
+        for (let [index, task] of newHashtagsArray.entries()){
+          this.$set(this.tagsTask, index, task);
         }
-        this.tagsTask = newHashtagsArray;
       },
       changeDate (indexTask) {
         const date = moment(this.newDateTask).toISOString();
@@ -426,27 +434,27 @@
     transform: scale3d(1,0.1,0.1);
   }
   .mx-datepicker {
-      position: relative;
-      display: inline-block;
-      width: 180px;
-      color: #73879c;
-      font: 11px/1.5 Helvetica Neue, Helvetica, Arial, Microsoft Yahei, sans-serif
+    position: relative;
+    display: inline-block;
+    width: 180px;
+    color: #73879c;
+    font: 11px/1.5 Helvetica Neue, Helvetica, Arial, Microsoft Yahei, sans-serif;
   }
 
   .mx-input {
-      display: inline-block;
-      width: 100%;
-      height: 24px;
-      padding: 1px 30px;
-      padding-left: 0px;
-      font-size: 11px;
-      font-weight: bold;
-      text-transform: uppercase;
-      line-height: 1.4;
-      color: #555;
-      background-color: #fff;
-      border: none;
-      border-radius: 0px;
-      border-bottom: 2px solid #000;
+    display: inline-block;
+    width: 100%;
+    height: 24px;
+    padding: 1px 30px;
+    padding-left: 0px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 1.4;
+    color: #555;
+    background-color: #fff;
+    border: none;
+    border-radius: 0px;
+    border-bottom: 2px solid #000;
   }
 </style>

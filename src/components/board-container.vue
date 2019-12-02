@@ -47,7 +47,7 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-          let sortedTasksDefult = this.tasks.slice().sort((a, b) => a.id - b.id);
+          let sortedTasksDefult = this.tasks.slice().sort((a, b) => b.id - a.id);
             for (let [index, task] of sortedTasksDefult.entries()){
               this.$set(this.tasks, index, task)
             }

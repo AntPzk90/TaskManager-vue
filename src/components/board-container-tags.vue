@@ -1,7 +1,7 @@
 <template>
   <section class="board container">
     <div class="board__filter-list">
-      <a href="#" class="board__filter"  @click.prevent= "sort('default-sort')" ref = "a">SORT BY DEFAULT</a>
+      <a href="#" class="board__filter"  @click.prevent = "sort('default-sort')" ref = "a">SORT BY DEFAULT</a>
       <a href="#" class="board__filter"  @click.prevent = "sort('up-sort')" ref = "a">SORT BY DATE up</a>
       <a href="#" class="board__filter"  @click.prevent = "sort('down-sort')" ref = "a">SORT BY DATE down</a>
     </div>
@@ -48,22 +48,21 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-            let sortedTasksDefult = this.archiveTasks.slice().sort((a, b) => a.id - b.id);
+            let sortedTasksDefult = this.tagsTasks.slice().sort((a, b) => b.id - a.id);
             for (let [index, task] of sortedTasksDefult.entries()){
-              this.$set(this.archiveTasks, index, task)
+              this.$set(this.tagsTasks, index, task)
             }
             break;
           case 'up-sort':
-            let sortedTasksUp = this.archiveTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
+            let sortedTasksUp = this.tagsTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
             for (let [index, task] of sortedTasksUp.entries()){
-              this.$set(this.archiveTasks, index, task)
+              this.$set(this.tagsTasks, index, task)
             }
             break;
           case 'down-sort':
-            console.log(this.archiveTasks)
-            let sortedTasksDown = this.archiveTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
+            let sortedTasksDown = this.tagsTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
             for (let [index, task] of sortedTasksDown.entries()){
-              this.$set(this.archiveTasks, index, task);
+              this.$set(this.tagsTasks, index, task);
             }
             break;
         }
