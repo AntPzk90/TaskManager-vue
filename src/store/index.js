@@ -7,12 +7,16 @@ const axios = require('axios');
 
 export const store = new Vuex.Store({
   state: {
+    defaultTasks: null,
     tasks: null,
     archiveTasks: null,
     repeatingTasks: null,
     tagsTasks: null,
   },
   getters: {
+    defaultTasks (state) {
+      return state.defaultTasks;
+    },
     tasks (state) {
       return state.tasks;
     },
@@ -27,7 +31,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
-
+    createDefaultTasks (state, payload) {
+      state.defaultTasks = payload;
+    },
     pushDatainTasks (state, payload) {
       state.tasks = payload.filter(task => task.is_archived == false).sort((a, b) => b.id - a.id);
       state.archiveTasks = payload.filter(task => task.is_archived).sort((a, b) => b.id - a.id);
@@ -46,6 +52,10 @@ export const store = new Vuex.Store({
       state.repeatingTasks = getAllRepeatingTasks();
       state.tagsTasks = state.tasks.filter(task => task.tags.length != 0).sort((a, b) => b.id - a.id);
     },
+    filteredTasks (state, payload) {
+      console.log(payload)
+      state.tasks = payload;
+    }
   },
   actions: {
     createTasks ({commit}) {
@@ -55,7 +65,7 @@ export const store = new Vuex.Store({
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks',
         headers: {
           Authorization : AUTHORIZATION,
-        }}).then(response => (commit('pushDatainTasks', response.data)))
+        }}).then(response => (commit('pushDatainTasks', response.data),commit('createDefaultTasks', response.data)))
            .catch(error => console.log(error,`error`));
     },
     updateTask({dispatch}, payload) {
