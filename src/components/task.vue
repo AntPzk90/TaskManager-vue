@@ -252,6 +252,7 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import DatePicker from 'vue2-datepicker';
   const moment = require('moment');
 
@@ -373,20 +374,19 @@
         if(reg.test(this.newHashtag)){
           this.hashTagError = false;
           newHashtagsArray.push(this.newHashtag)
-          let hashtagsData = {
-            hashTagsArray: newHashtagsArray,
-            index: this.indexTask,
-          }
           this.tagsTask = newHashtagsArray;
+          for (let [index, task] of newHashtagsArray.entries()){
+            this.$set(this.tagsTask, index, task);
+          }
         } else {
           this.hashTagError = true;
-          console.log(this.hashTagError)
         }
+        // попробовать сделать коммит обновления массива хеш тегов
       },
       deleteHashtag (index, indexTask) {
         let newHashtagsArray = this.tagsTask;
-        console.log(newHashtagsArray)
         newHashtagsArray.splice(index,1);
+        this.tagsTask = newHashtagsArray;
         for (let [index, task] of newHashtagsArray.entries()){
           this.$set(this.tagsTask, index, task);
         }
