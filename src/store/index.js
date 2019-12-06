@@ -35,6 +35,7 @@ export const store = new Vuex.Store({
       state.defaultTasks = payload;
     },
     pushDatainTasks (state, payload) {
+      //разобраться с данными которые приходят
       state.tasks = payload.filter(task => task.is_archived == false).sort((a, b) => b.id - a.id);
       state.archiveTasks = payload.filter(task => task.is_archived).sort((a, b) => b.id - a.id);
       function getAllRepeatingTasks () {
@@ -55,6 +56,12 @@ export const store = new Vuex.Store({
     filteredTasks (state, payload) {
       console.log(payload)
       state.tasks = payload;
+    },
+    updatetTask (state, payload) {
+      let stateTask = state.tasks.filter(it => it.id == payload.id)
+      for (let [index, task] of payload.tags.entries()){
+        Vue.set(stateTask[0].tags, index, task);
+      }
     }
   },
   actions: {

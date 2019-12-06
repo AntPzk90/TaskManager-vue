@@ -10,7 +10,7 @@
     <label for="filter__all" class="filter__label">
       All <span class="filter__all-count">{{getAllTasksCount}}</span></label
     > -->
-    <router-link to="/all" class="filter__label">
+    <router-link :to = "{name: 'allTasks'}" class="filter__label">
       <a class="filter__label">All</a>
       <span class="filter__all-count">{{getAllTasksCount}}</span>
     </router-link>

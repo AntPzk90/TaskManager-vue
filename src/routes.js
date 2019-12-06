@@ -20,7 +20,12 @@ const routes = [
 	{
     name: 'allTasks',
 		path: '/all',
-		component: boardContainer,
+    component: boardContainer,
+  },
+  {
+    name: 'task',
+		path: '/all/task:id',
+    component: boardContainer,
   },
   {
     name: 'archivedTasks',
