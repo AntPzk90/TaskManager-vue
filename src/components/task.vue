@@ -7,15 +7,14 @@
           <button type="button" class="card__btn card__btn--edit" @click = "changeEditFlag">
             edit
           </button>
-          <!-- <router-link tag="button" class="card__btn card__btn--edit" :to = "{name: 'task', params: { id: idTask}}" @click.native = "changeEditFlag">
-            edit
-          </router-link> -->
           <button type="button" class="card__btn card__btn--archive" @click = "changeArchivedFlag(index)" @click.prevent = "saveData(id)">
             {{archivedState}}
           </button>
           <button
             type="button"
-            class="card__btn card__btn--favorites card__btn--disabled"
+            class="card__btn card__btn--favorites"
+            @click = "changeFavoriteTaskFlag"
+            @click.prevent = "saveData(id)"
           >
             favorites
           </button>
@@ -28,7 +27,7 @@
         </div>
 
         <div class="card__textarea-wrap">
-          <p class="card__text">{{descriptionTask}} {{idTask}}</p>
+          <p class="card__text">{{descriptionTask}}</p>
         </div>
 
         <div class="card__settings">
@@ -329,7 +328,7 @@
         } else {
           return 'archive'
         }
-      }
+      },
     },
     methods: {
       changeEditFlag () {
@@ -358,6 +357,13 @@
         let isArchived = {
           isArchived: this.isArchivedTask,
           index:index,
+        }
+      },
+      changeFavoriteTaskFlag () {
+        if(this.isFavoriteTask == false){
+          this.isFavoriteTask = true;
+        }else if(this.isFavoriteTask){
+          this.isFavoriteTask = false;
         }
       },
       changeRepeatingDayFlag (name, index) {
@@ -393,9 +399,11 @@
         let newHashtagsArray = this.tagsTask;
         newHashtagsArray.splice(index,1);
         this.tagsTask = newHashtagsArray;
-        for (let [index, task] of newHashtagsArray.entries()){
-          this.$set(this.tagsTask, index, task);
+        let info = {
+          id:this.idTask,
+          tags:this.tagsTask,
         }
+        this.$store.commit('updatetTask', info);
       },
       changeDate (indexTask) {
         const date = moment(this.newDateTask).toISOString();

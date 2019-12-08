@@ -41,16 +41,16 @@
           // проверка если первый символ сточный
           let tasks;
           switch (this.$route.name) {
-            case "allTasks":
+            case "all":
               tasks = this.$store.getters.tasks;
               break;
-            case "archivedTasks":
+            case "archive":
               tasks = this.$store.getters.archiveTasks;
               break;
-            case "repeatingTasks":
+            case "repeating":
               tasks = this.$store.getters.repeatingTasks;
               break;
-            case "tagsTasks":
+            case "tags":
               tasks = this.$store.getters.tagsTasks;
               break;
           }
@@ -63,16 +63,16 @@
           // проверка если первый символ решетка хештега
           let tasks;
           switch (this.$route.name) {
-            case "allTasks":
+            case "all":
               tasks = this.$store.getters.tasks;
               break;
-            case "archivedTasks":
+            case "archive":
               tasks = this.$store.getters.archiveTasks;
               break;
-            case "repeatingTasks":
+            case "repeating":
               tasks = this.$store.getters.repeatingTasks;
               break;
-            case "tagsTasks":
+            case "tags":
               tasks = this.$store.getters.tagsTasks;
               break;
           }
@@ -89,16 +89,16 @@
         } else if(this.search !== ''){
           let tasks;
           switch (this.$route.name) {
-            case "allTasks":
+            case "all":
               tasks = this.$store.getters.tasks;
               break;
-            case "archivedTasks":
+            case "archive":
               tasks = this.$store.getters.archiveTasks;
               break;
-            case "repeatingTasks":
+            case "repeating":
               tasks = this.$store.getters.repeatingTasks;
               break;
-            case "tagsTasks":
+            case "tags":
               tasks = this.$store.getters.tagsTasks;
               break;
           }

@@ -10,8 +10,8 @@
     <label for="filter__all" class="filter__label">
       All <span class="filter__all-count">{{getAllTasksCount}}</span></label
     > -->
-    <router-link :to = "{name: 'allTasks'}" class="filter__label">
-      <a class="filter__label">All</a>
+    <router-link :to = "{name: 'all'}" class="filter__label" :class = "{'filter__label--disabled': getAllTasksCount == 0}">
+      All
       <span class="filter__all-count">{{getAllTasksCount}}</span>
     </router-link>
     <input
@@ -34,15 +34,20 @@
     <label for="filter__today" class="filter__label"
       >Today <span class="filter__today-count">0</span></label
     >
-    <input
+    <!-- <input
       type="radio"
       id="filter__favorites"
       class="filter__input visually-hidden"
       name="filter"
     />
     <label for="filter__favorites" class="filter__label"
-      >Favorites <span class="filter__favorites-count">{{getAllFavoritesTasksCount}}</span></label
-    >
+      >Favorites <span class="filter__favorites-count">{{getAllfavoritesTasksCount}}</span></label
+    > -->
+    <router-link to="/favorite" class="filter__label" :class = "{'filter__label--disabled': getAllfavoritesTasksCount == 0}">
+      Favorites
+      <span class="filter__all-count">{{getAllfavoritesTasksCount}}</span>
+    </router-link>
+
     <!-- <input
       type="radio"
       id="filter__repeating"
@@ -52,8 +57,8 @@
     <label for="filter__repeating" class="filter__label"
       >Repeating <span class="filter__repeating-count">{{getAllRepeatingTasksCount}}</span></label
     > -->
-    <router-link to="/repeating" class="filter__label">
-      <a class="filter__label">Repeating</a>
+    <router-link to="/repeating" class="filter__label" :class = "{'filter__label--disabled': getAllRepeatingTasksCount == 0}">
+      Repeating
       <span class="filter__all-count">{{getAllRepeatingTasksCount}}</span>
     </router-link>
 
@@ -66,8 +71,8 @@
     <label for="filter__tags" class="filter__label"
       >Tags <span class="filter__tags-count">{{getAllTagsTasksCount}}</span></label
     > -->
-    <router-link to="/tags" class="filter__label">
-      <a class="filter__label">Tags</a>
+    <router-link to="/tags" class="filter__label" :class = "{'filter__label--disabled': getAllTagsTasksCount == 0}">
+      Tags
       <span class="filter__all-count">{{getAllTagsTasksCount}}</span>
     </router-link>
     <!-- <input
@@ -79,8 +84,8 @@
     <label for="filter__archive" class="filter__label"
       >Archive <span class="filter__archive-count">{{getAllArchivedTasksCount}}</span></label
     > -->
-    <router-link to="/archive" class="filter__label">
-      <a class="filter__label">Archive</a>
+    <router-link to="/archive" class="filter__label" :class = "{'filter__label--disabled': getAllArchivedTasksCount == 0}">
+      Archive
       <span class="filter__all-count">{{getAllArchivedTasksCount}}</span>
     </router-link>
   </section>
@@ -97,19 +102,6 @@
       getAllTasksCount () {
         if(this.$store.getters.tasks){
           return this.$store.getters.tasks.length
-        }else{
-          return 'loading'
-        }
-      },
-      getAllFavoritesTasksCount () {
-        if(this.$store.getters.tasks){
-          let count = 0;
-          for(let task of this.$store.getters.tasks){
-            if(task.is_favorite){
-              count++
-            }
-          }
-          return count
         }else{
           return 'loading'
         }
@@ -149,7 +141,14 @@
         }else{
           return 'loading'
         }
-      }
+      },
+      getAllfavoritesTasksCount () {
+        if(this.$store.getters.favoritesTasks){
+          return this.$store.getters.favoritesTasks.length;
+        }else{
+          return 'loading'
+        }
+      },
     }
   }
 </script>

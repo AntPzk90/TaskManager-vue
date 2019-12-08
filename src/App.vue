@@ -9,10 +9,6 @@
     <header-filters>
     </header-filters>
 
-    <!-- <board-container>
-    </board-container> -->
-    <!-- <board-container-archive>
-    </board-container-archive> -->
     <router-view></router-view>
     <ul>
       <li v-for = "(item, index) in tasks" :key = "index">

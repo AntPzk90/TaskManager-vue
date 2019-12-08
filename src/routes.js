@@ -12,35 +12,41 @@ import boardContainer from './components/board-container';
 import boardContainerArchive from './components/board-container-archive';
 import boardContainerRepeating from './components/board-container-repeating';
 import boardContainerTags from './components/board-container-tags';
+import boardContainerFavorite from './components/board-container-favorite';
 const routes = [
   {
 		path: '',
-		redirect: {name: 'allTasks'}
+		redirect: {name: 'all'}
 	},
 	{
-    name: 'allTasks',
+    name: 'all',
 		path: '/all',
     component: boardContainer,
   },
   {
     name: 'task',
-		path: '/all/task:id',
+		path: '/:page/task:id',
     component: boardContainer,
   },
   {
-    name: 'archivedTasks',
+    name: 'archive',
 		path: '/archive',
 		component: boardContainerArchive,
   },
   {
-    name: 'repeatingTasks',
+    name: 'repeating',
 		path: '/repeating',
 		component: boardContainerRepeating,
   },
   {
-    name: 'tagsTasks',
+    name: 'tags',
 		path: '/tags',
 		component: boardContainerTags,
+  },
+  {
+    name: 'favorite',
+		path: '/favorite',
+		component: boardContainerFavorite,
 	}
 
 ];

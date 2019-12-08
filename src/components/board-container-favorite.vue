@@ -7,17 +7,17 @@
     </div>
 
     <transition-group tag ="div" class="board__tasks" name="list">
-      <task-card v-for = "(task, index) in archiveTasks"  v-if = "index < limitation"
-                                                          :key = "task.id"
-                                                          :index = "index"
-                                                          :id = "task.id"
-                                                          :description = "task.description"
-                                                          :color = "task.color"
-                                                          :date = "task.due_date"
-                                                          :tags = "task.tags"
-                                                          :repeatingDays = "task.repeating_days"
-                                                          :isArchived = "task.is_archived"
-                                                          :isFavorite = "task.is_favorite">
+      <task-card v-for = "(task, index) in favoritesTasks"  v-if = "index < limitation"
+                                                            :key = "task.id"
+                                                            :index = "index"
+                                                            :id = "task.id"
+                                                            :description = "task.description"
+                                                            :color = "task.color"
+                                                            :date = "task.due_date"
+                                                            :tags = "task.tags"
+                                                            :repeatingDays = "task.repeating_days"
+                                                            :isArchived = "task.is_archived"
+                                                            :isFavorite = "task.is_favorite">
       </task-card>
     </transition-group>
     <button class="load-more" type="button" @click = "changeLimitation">load more</button>
@@ -42,7 +42,7 @@
     },
     computed: {
       ...mapGetters([
-        'archiveTasks',
+        'favoritesTasks',
       ]),
     },
     methods: {

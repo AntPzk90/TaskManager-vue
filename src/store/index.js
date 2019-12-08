@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
     archiveTasks: null,
     repeatingTasks: null,
     tagsTasks: null,
+    favoritesTasks: null,
   },
   getters: {
     defaultTasks (state) {
@@ -27,7 +28,10 @@ export const store = new Vuex.Store({
       return state.repeatingTasks;
     },
     tagsTasks (state) {
-      return state.tagsTasks
+      return state.tagsTasks;
+    },
+    favoritesTasks (state) {
+      return state.favoritesTasks;
     }
   },
   mutations: {
@@ -52,16 +56,20 @@ export const store = new Vuex.Store({
       }
       state.repeatingTasks = getAllRepeatingTasks();
       state.tagsTasks = state.tasks.filter(task => task.tags.length != 0).sort((a, b) => b.id - a.id);
+      state.favoritesTasks = payload.filter(task => task.is_favorite).sort((a, b) => b.id - a.id);
     },
     filteredTasks (state, payload) {
       console.log(payload)
       state.tasks = payload;
     },
     updatetTask (state, payload) {
+      console.log(payload)
       let stateTask = state.tasks.filter(it => it.id == payload.id)
+      stateTask[0].tags = payload.tags;
       for (let [index, task] of payload.tags.entries()){
         Vue.set(stateTask[0].tags, index, task);
       }
+      console.log(stateTask[0].tags)
     }
   },
   actions: {
