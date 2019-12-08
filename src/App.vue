@@ -10,11 +10,11 @@
     </header-filters>
 
     <router-view></router-view>
-    <ul>
+    <!-- <ul>
       <li v-for = "(item, index) in tasks" :key = "index">
         {{ item }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -52,7 +52,6 @@
     },
     mounted() {
       this.$store.dispatch('createTasks')
-
     }
   }
 </script>

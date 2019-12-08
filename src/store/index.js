@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const axios = require('axios');
+const moment = require('moment');
 
 export const store = new Vuex.Store({
   state: {
@@ -13,6 +14,8 @@ export const store = new Vuex.Store({
     repeatingTasks: null,
     tagsTasks: null,
     favoritesTasks: null,
+    todayTasks: null,
+    overdueTasks: null,
   },
   getters: {
     defaultTasks (state) {
@@ -32,6 +35,12 @@ export const store = new Vuex.Store({
     },
     favoritesTasks (state) {
       return state.favoritesTasks;
+    },
+    todayTasks (state) {
+      return state.todayTasks;
+    },
+    overdueTasks (state) {
+      return state.overdueTasks;
     }
   },
   mutations: {
@@ -57,9 +66,14 @@ export const store = new Vuex.Store({
       state.repeatingTasks = getAllRepeatingTasks();
       state.tagsTasks = state.tasks.filter(task => task.tags.length != 0).sort((a, b) => b.id - a.id);
       state.favoritesTasks = payload.filter(task => task.is_favorite).sort((a, b) => b.id - a.id);
+      //работа с датой сегодняшний день
+      let todayEnd = moment(new Date).toISOString().split("T").slice(0,1)[0] + "T" + "23:59:59.000Z";//конец сегодн. дня
+      let todayStart = moment(new Date).toISOString().split("T").slice(0,1)[0] + "T" + "00:00:00.000Z";//начало сегодн. дня
+      state.todayTasks = payload.filter(task => moment(task.due_date).unix() <= moment(todayEnd).unix() && moment(task.due_date).unix() >= moment(todayStart).unix()).sort((a, b) => b.id - a.id);;
+      state.overdueTasks  = payload.filter(task => moment(task.due_date).unix() < moment(todayStart).unix() && !task.is_archived).sort((a, b) => b.id - a.id);;
+      console.log(state.overdueTasks)
     },
     filteredTasks (state, payload) {
-      console.log(payload)
       state.tasks = payload;
     },
     updatetTask (state, payload) {
@@ -69,7 +83,6 @@ export const store = new Vuex.Store({
       for (let [index, task] of payload.tags.entries()){
         Vue.set(stateTask[0].tags, index, task);
       }
-      console.log(stateTask[0].tags)
     }
   },
   actions: {

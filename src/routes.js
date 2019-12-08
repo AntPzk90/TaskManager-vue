@@ -13,6 +13,8 @@ import boardContainerArchive from './components/board-container-archive';
 import boardContainerRepeating from './components/board-container-repeating';
 import boardContainerTags from './components/board-container-tags';
 import boardContainerFavorite from './components/board-container-favorite';
+import boardContainerToday from './components/board-container-today';
+import boardContainerOverdue from './components/board-container-overdue';
 const routes = [
   {
 		path: '',
@@ -47,6 +49,16 @@ const routes = [
     name: 'favorite',
 		path: '/favorite',
 		component: boardContainerFavorite,
+  },
+  {
+    name: 'today',
+		path: '/today',
+		component: boardContainerToday,
+  },
+  {
+    name: 'overdue',
+		path: '/overdue',
+		component: boardContainerOverdue,
 	}
 
 ];

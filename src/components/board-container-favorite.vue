@@ -50,22 +50,22 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-            let sortedTasksDefult = this.archiveTasks.slice().sort((a, b) => b.id - a.id);
+            let sortedTasksDefult = this.favoritesTasks.slice().sort((a, b) => b.id - a.id);
             for (let [index, task] of sortedTasksDefult.entries()){
-              this.$set(this.archiveTasks, index, task)
+              this.$set(this.favoritesTasks, index, task)
             }
             break;
           case 'up-sort':
-            let sortedTasksUp = this.archiveTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
+            let sortedTasksUp = this.favoritesTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
             for (let [index, task] of sortedTasksUp.entries()){
-              this.$set(this.archiveTasks, index, task)
+              this.$set(this.favoritesTasks, index, task)
             }
             break;
           case 'down-sort':
-            console.log(this.archiveTasks)
-            let sortedTasksDown = this.archiveTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
+            console.log(this.favoritesTasks)
+            let sortedTasksDown = this.favoritesTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
             for (let [index, task] of sortedTasksDown.entries()){
-              this.$set(this.archiveTasks, index, task);
+              this.$set(this.favoritesTasks, index, task);
             }
             break;
         }

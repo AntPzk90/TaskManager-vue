@@ -14,7 +14,7 @@
       All
       <span class="filter__all-count">{{getAllTasksCount}}</span>
     </router-link>
-    <input
+    <!-- <input
       type="radio"
       id="filter__overdue"
       class="filter__input visually-hidden"
@@ -23,8 +23,12 @@
     />
     <label for="filter__overdue" class="filter__label"
       >Overdue <span class="filter__overdue-count">0</span></label
-    >
-    <input
+    > -->
+    <router-link to="/overdue" class="filter__label" :class = "{'filter__label--disabled':  getAllOverdueTasksCount == 0}">
+      Overdue
+      <span class="filter__all-count">{{ getAllOverdueTasksCount}}</span>
+    </router-link>
+    <!-- <input
       type="radio"
       id="filter__today"
       class="filter__input visually-hidden"
@@ -33,7 +37,11 @@
     />
     <label for="filter__today" class="filter__label"
       >Today <span class="filter__today-count">0</span></label
-    >
+    > -->
+    <router-link to="/today" class="filter__label" :class = "{'filter__label--disabled': getAllTodayTasksCount == 0}">
+      Today
+      <span class="filter__all-count">{{getAllTodayTasksCount}}</span>
+    </router-link>
     <!-- <input
       type="radio"
       id="filter__favorites"
@@ -95,7 +103,6 @@
   export default {
     data () {
       return {
-
       }
     },
     computed: {
@@ -145,6 +152,20 @@
       getAllfavoritesTasksCount () {
         if(this.$store.getters.favoritesTasks){
           return this.$store.getters.favoritesTasks.length;
+        }else{
+          return 'loading'
+        }
+      },
+      getAllTodayTasksCount () {
+        if(this.$store.getters.todayTasks){
+          return this.$store.getters.todayTasks.length;
+        }else{
+          return 'loading'
+        }
+      },
+      getAllOverdueTasksCount () {
+        if(this.$store.getters.overdueTasks){
+          return this.$store.getters.overdueTasks.length;
         }else{
           return 'loading'
         }

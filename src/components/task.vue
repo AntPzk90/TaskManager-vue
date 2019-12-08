@@ -1,6 +1,6 @@
 <template>
 <transition name="fade">
-  <article class="card" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-if = "cardEdit" key = "1">
+  <article class="card" :class = "[addColorTaskClass, addRepeatingDaysClass, {'card--favorite': isFavoriteTask && !overdueState, 'card--deadline': overdueState}]" v-if = "cardEdit" key = "1">
     <div class="card__form">
       <div class="card__inner">
         <div class="card__control">
@@ -329,6 +329,15 @@
           return 'archive'
         }
       },
+      overdueState () {
+        let todayStart = moment(new Date).toISOString().split("T").slice(0,1)[0] + "T" + "00:00:00.000Z";//начало сегодн. дня
+        if(this.dateTask < todayStart){
+          return true
+        }
+        else {
+          return false
+        }
+      }
     },
     methods: {
       changeEditFlag () {
@@ -393,7 +402,6 @@
         } else {
           this.hashTagError = true;
         }
-        // попробовать сделать коммит обновления массива хеш тегов
       },
       deleteHashtag (index, indexTask) {
         let newHashtagsArray = this.tagsTask;
@@ -408,10 +416,6 @@
       changeDate (indexTask) {
         const date = moment(this.newDateTask).toISOString();
         this.dateTask = date;
-        let dateData = {
-          date: date,
-          index: indexTask,
-        }
       },
       saveData (id) {
         const updateData = {

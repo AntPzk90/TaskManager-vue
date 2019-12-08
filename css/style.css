@@ -234,6 +234,9 @@ body {
   background-color: #ffffff;
   outline: 0;
 }
+.card--favorite .card__inner {
+  box-shadow: 0 2px 38px 0 rgba(96, 240, 0, 0.5);
+}
 .card--deadline .card__inner {
   box-shadow: 0 2px 38px 0 rgba(240, 0, 0, 0.19);
 }
