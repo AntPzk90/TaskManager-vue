@@ -108,13 +108,15 @@ body {
   transition: opacity 0.3s ease-out;
   text-shadow: 1px 0 0 #000000;
 }
-.control__btn-add:active,
-.control__btn-add:focus{
+.control__btn-add:active{
   opacity: 1;
   color:#31b55c;
   transition: opacity 0.1s ease-out;
   text-shadow: 1px 0 0 #000000;
   text-decoration: none;
+}
+.control__btn-add:focus{
+  outline-color:#31b55c;
 }
 .search__input {
   width: 100%;
@@ -131,7 +133,7 @@ body {
   transition: max-height 0.3s ease-out;
 }
 .search__input:focus{
-  background-color: #5de68a;
+  background-color: #31b55c;
 }
 .search__input::placeholder {
   font-weight: normal;
@@ -239,6 +241,9 @@ body {
 }
 .card--deadline .card__inner {
   box-shadow: 0 2px 38px 0 rgba(240, 0, 0, 0.19);
+}
+.card--favorite .card__btn--favorites{
+  color: #31b55c;
 }
 .card__inner:hover {
   outline: 10px solid white;

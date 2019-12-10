@@ -6,7 +6,7 @@
       class="search__input"
       placeholder="START TYPING — SEARCH BY WORD, #HASHTAG OR DATE"
       v-model = "search"
-      v-debounce:1.5s="searching" debounce-events="input"
+      v-debounce:1.5s="searching" debounce-events="keyup"
     />
     <label class="visually-hidden" for="search__input">Search</label>
   </section>
@@ -30,15 +30,13 @@
     },
     methods: {
       searching () {
-
+        this.$store.commit('pushDatainTasks',this.$store.getters.defaultTasks);
         let type = this.search.split('');
-
         if(this.search == ''){
           this.$store.commit('pushDatainTasks',this.$store.getters.defaultTasks);
         }
-
         if (isNaN(parseInt(type[0])) && type[0] != "#" && this.search !== '') {
-          // проверка если первый символ сточный
+          // проверка если первый символ сточный')
           let tasks;
           switch (this.$route.name) {
             case "all":
@@ -58,7 +56,6 @@
             return it.description.match(this.search)
           });
           this.$store.commit('pushDatainTasks', searchForDescription);
-
         } else if (type[0] == '#') {
           // проверка если первый символ решетка хештега
           let tasks;
@@ -85,7 +82,6 @@
             }
           });
           this.$store.commit('pushDatainTasks', searchForTags);
-
         } else if(this.search !== ''){
           let tasks;
           switch (this.$route.name) {
@@ -107,7 +103,6 @@
             return moment(it.due_date).format('DD MMMM').match(this.search)
           });
           this.$store.commit('pushDatainTasks', searchForDate)
-
         }
       }
     }

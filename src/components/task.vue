@@ -56,7 +56,7 @@
     </div>
   </article>
 
-  <article class="card card--edit" :class = "[addColorTaskClass, addRepeatingDaysClass]" v-else  key = "2">
+  <article class="card card--edit" :class = "[addColorTaskClass, addRepeatingDaysClass, {'card--favorite': isFavoriteTask && !overdueState, 'card--deadline': overdueState}]" v-else  key = "2">
     <form class="card__form" method="get">
       <div class="card__inner">
         <div class="card__control">
@@ -65,7 +65,9 @@
           </button>
           <button
             type="button"
-            class="card__btn card__btn--favorites card__btn--disabled"
+            class="card__btn card__btn--favorites"
+            @click = "changeFavoriteTaskFlag"
+            @click.prevent = "saveData(id)"
           >
             favorites
           </button>

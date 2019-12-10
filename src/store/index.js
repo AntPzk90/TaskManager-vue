@@ -69,9 +69,8 @@ export const store = new Vuex.Store({
       //работа с датой сегодняшний день
       let todayEnd = moment(new Date).toISOString().split("T").slice(0,1)[0] + "T" + "23:59:59.000Z";//конец сегодн. дня
       let todayStart = moment(new Date).toISOString().split("T").slice(0,1)[0] + "T" + "00:00:00.000Z";//начало сегодн. дня
-      state.todayTasks = payload.filter(task => moment(task.due_date).unix() <= moment(todayEnd).unix() && moment(task.due_date).unix() >= moment(todayStart).unix()).sort((a, b) => b.id - a.id);;
-      state.overdueTasks  = payload.filter(task => moment(task.due_date).unix() < moment(todayStart).unix() && !task.is_archived).sort((a, b) => b.id - a.id);;
-      console.log(state.overdueTasks)
+      state.todayTasks = payload.filter(task => moment(task.due_date).unix() <= moment(todayEnd).unix() && moment(task.due_date).unix() >= moment(todayStart).unix()).sort((a, b) => b.id - a.id);
+      state.overdueTasks  = payload.filter(task => moment(task.due_date).unix() < moment(todayStart).unix() && !task.is_archived).sort((a, b) => b.id - a.id);
     },
     filteredTasks (state, payload) {
       state.tasks = payload;
@@ -114,7 +113,7 @@ export const store = new Vuex.Store({
         method: 'post',
         url: 'https://htmlacademy-es-9.appspot.com/task-manager/tasks/',
         data: JSON.stringify({ "description": "new task",
-                               "due_date": "2019-11-22T10:52:26.006Z",
+                               "due_date": moment(new Date).toISOString(),
                                "tags": [],
                                "repeating_days": {
                                   "mo": false,
