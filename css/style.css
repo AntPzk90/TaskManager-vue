@@ -51,6 +51,7 @@ body {
   padding-bottom: 20px;
 }
 .main__control {
+  padding-top: 16px;
   margin-bottom: 8px;
 }
 .main__search {
@@ -75,7 +76,8 @@ body {
   margin-top: 0;
   margin-bottom: 0;
 }
-.control__label {
+.control__label,
+.control__btn-add {
   font-size: 16px;
   display: inline-flex;
   font-weight: normal;
@@ -83,6 +85,8 @@ body {
   text-decoration: none;
   margin-left: 54px;
   cursor: pointer;
+  background: transparent;
+  border:none;
 }
 .control__label:hover {
   opacity: 0.7;
@@ -99,12 +103,27 @@ body {
 .control__label--new-task {
   margin-right: auto;
 }
-
+.control__btn-add:hover{
+  opacity: 0.7;
+  transition: opacity 0.3s ease-out;
+  text-shadow: 1px 0 0 #000000;
+}
+.control__btn-add:active{
+  opacity: 1;
+  color:#31b55c;
+  transition: opacity 0.1s ease-out;
+  text-shadow: 1px 0 0 #000000;
+  text-decoration: none;
+}
+.control__btn-add:focus{
+  outline-color:#31b55c;
+}
 .search__input {
   width: 100%;
   height: 40px;
   max-height: 40px;
   box-sizing: border-box;
+  padding: 0 20px;
   border: 3px solid #000000;
   font-size: 16px;
   font-weight: bold;
@@ -112,6 +131,9 @@ body {
   font-family: inherit;
   outline: none;
   transition: max-height 0.3s ease-out;
+}
+.search__input:focus{
+  background-color: #31b55c;
 }
 .search__input::placeholder {
   font-weight: normal;
@@ -127,12 +149,15 @@ body {
   text-transform: uppercase;
   cursor: pointer;
   font-weight: 500;
+  color: inherit;
+  text-decoration: none;
 }
 .filter__label:hover {
   opacity: 0.7;
   transition: opacity 0.2s ease-out;
 }
-.filter__input:not(:disabled):checked + .filter__label {
+.filter__input:not(:disabled):checked + .filter__label,
+.filter__label--active {
   text-shadow: 1px 0 0 #000000;
 }
 .filter__input:not(:disabled):checked + .filter__label:hover {
@@ -142,7 +167,9 @@ body {
 .filter__input:disabled + .filter__label {
   color: #e7e3e3;
 }
-
+.filter__label--disabled{
+  color: #e7e3e3;
+}
 .board__filter-list {
   margin-bottom: 24px;
 }
@@ -209,8 +236,14 @@ body {
   background-color: #ffffff;
   outline: 0;
 }
+.card--favorite .card__inner {
+  box-shadow: 0 2px 38px 0 rgba(96, 240, 0, 0.5);
+}
 .card--deadline .card__inner {
   box-shadow: 0 2px 38px 0 rgba(240, 0, 0, 0.19);
+}
+.card--favorite .card__btn--favorites{
+  color: #31b55c;
 }
 .card__inner:hover {
   outline: 10px solid white;
@@ -598,7 +631,18 @@ body {
   color: #000000;
 }
 .card--edit .card__hashtag-input:focus {
+  transition: border .5s, color .3s;
   border-color: #0c5cdd;
+}
+.card--edit .card__hashtag-input--error:focus{
+  transition: border .5s, color .3s;
+  color: lightcoral;
+  border-color: lightcoral;
+}
+.card--edit .card__hashtag-input--error{
+  transition: border .5s, color .3s;
+  color: lightcoral;
+  border-color: lightcoral;
 }
 .card--edit .card__colors-inner {
   order: 3;

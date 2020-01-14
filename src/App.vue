@@ -9,19 +9,16 @@
     <header-filters>
     </header-filters>
 
-    <board-container>
-    </board-container>
-    <ul>
+    <router-view></router-view>
+    <!-- <ul>
       <li v-for = "(item, index) in tasks" :key = "index">
         {{ item }}
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
 <script>
-  const axios = require('axios');
-
   import {store} from './store/index';
   import {router} from './routes';
   //components import
@@ -29,6 +26,7 @@
   import headerSearch from './components/header-search';
   import headerFilters from './components/header-filters';
   import boardContainer from './components/board-container';
+  import boardContainerArchive from './components/board-container-archive';
 
 
   export default {
@@ -40,6 +38,7 @@
       headerSearch,
       headerFilters,
       boardContainer,
+      boardContainerArchive,
     },
     data () {
       return {
@@ -53,7 +52,6 @@
     },
     mounted() {
       this.$store.dispatch('createTasks')
-
     }
   }
 </script>

@@ -1,24 +1,23 @@
 <template>
   <section class="board container">
     <div class="board__filter-list">
-      <a href="#" class="board__filter"  @click.prevent= "sort('default-sort')" ref = "a">SORT BY DEFAULT</a>
+      <a href="#" class="board__filter"  @click.prevent = "sort('default-sort')" ref = "a">SORT BY DEFAULT</a>
       <a href="#" class="board__filter"  @click.prevent = "sort('up-sort')" ref = "a">SORT BY DATE up</a>
       <a href="#" class="board__filter"  @click.prevent = "sort('down-sort')" ref = "a">SORT BY DATE down</a>
     </div>
 
     <transition-group tag ="div" class="board__tasks" name="list">
-      <task-card v-for = "(task, index) in tasks" v-if = "index < limitation"
-                                                  :key = "task.id"
-                                                  :index = "index"
-                                                  :id = "task.id"
-                                                  :description = "task.description"
-                                                  :color = "task.color"
-                                                  :date = "task.due_date"
-                                                  :tags = "task.tags"
-                                                  :repeatingDays = "task.repeating_days"
-                                                  :isArchived = "task.is_archived"
-                                                  :isFavorite = "task.is_favorite"
-                                                  >
+      <task-card v-for = "(task, index) in favoritesTasks"  v-if = "index < limitation"
+                                                            :key = "task.id"
+                                                            :index = "index"
+                                                            :id = "task.id"
+                                                            :description = "task.description"
+                                                            :color = "task.color"
+                                                            :date = "task.due_date"
+                                                            :tags = "task.tags"
+                                                            :repeatingDays = "task.repeating_days"
+                                                            :isArchived = "task.is_archived"
+                                                            :isFavorite = "task.is_favorite">
       </task-card>
     </transition-group>
     <button class="load-more" type="button" @click = "changeLimitation">load more</button>
@@ -43,7 +42,7 @@
     },
     computed: {
       ...mapGetters([
-        'tasks',
+        'favoritesTasks',
       ]),
     },
     methods: {
@@ -51,21 +50,22 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-          let sortedTasksDefult = this.tasks.slice().sort((a, b) => b.id - a.id);
+            let sortedTasksDefult = this.favoritesTasks.slice().sort((a, b) => b.id - a.id);
             for (let [index, task] of sortedTasksDefult.entries()){
-              this.$set(this.tasks, index, task)
+              this.$set(this.favoritesTasks, index, task)
             }
             break;
           case 'up-sort':
-            let sortedTasksUp = this.tasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
+            let sortedTasksUp = this.favoritesTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
             for (let [index, task] of sortedTasksUp.entries()){
-              this.$set(this.tasks, index, task);
+              this.$set(this.favoritesTasks, index, task)
             }
             break;
           case 'down-sort':
-            let sortedTasksDown = this.tasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
+            console.log(this.favoritesTasks)
+            let sortedTasksDown = this.favoritesTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
             for (let [index, task] of sortedTasksDown.entries()){
-              this.$set(this.tasks, index, task);
+              this.$set(this.favoritesTasks, index, task);
             }
             break;
         }

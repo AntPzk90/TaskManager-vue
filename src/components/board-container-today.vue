@@ -7,7 +7,7 @@
     </div>
 
     <transition-group tag ="div" class="board__tasks" name="list">
-      <task-card v-for = "(task, index) in tasks" v-if = "index < limitation"
+      <task-card v-for = "(task, index) in todayTasks" v-if = "index < limitation"
                                                   :key = "task.id"
                                                   :index = "index"
                                                   :id = "task.id"
@@ -43,7 +43,7 @@
     },
     computed: {
       ...mapGetters([
-        'tasks',
+        'todayTasks',
       ]),
     },
     methods: {
@@ -51,21 +51,21 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-          let sortedTasksDefult = this.tasks.slice().sort((a, b) => b.id - a.id);
-            for (let [index, task] of sortedTasksDefult.entries()){
-              this.$set(this.tasks, index, task)
+          let sortedtodayTasksDefult = this.todayTasks.slice().sort((a, b) => b.id - a.id);
+            for (let [index, task] of sortedtodayTasksDefult.entries()){
+              this.$set(this.todayTasks, index, task)
             }
             break;
           case 'up-sort':
-            let sortedTasksUp = this.tasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
-            for (let [index, task] of sortedTasksUp.entries()){
-              this.$set(this.tasks, index, task);
+            let sortedtodayTasksUp = this.todayTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
+            for (let [index, task] of sortedtodayTasksUp.entries()){
+              this.$set(this.todayTasks, index, task);
             }
             break;
           case 'down-sort':
-            let sortedTasksDown = this.tasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
-            for (let [index, task] of sortedTasksDown.entries()){
-              this.$set(this.tasks, index, task);
+            let sortedtodayTasksDown = this.todayTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
+            for (let [index, task] of sortedtodayTasksDown.entries()){
+              this.$set(this.todayTasks, index, task);
             }
             break;
         }

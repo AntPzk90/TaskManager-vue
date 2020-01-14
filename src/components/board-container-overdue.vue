@@ -7,7 +7,7 @@
     </div>
 
     <transition-group tag ="div" class="board__tasks" name="list">
-      <task-card v-for = "(task, index) in tasks" v-if = "index < limitation"
+      <task-card v-for = "(task, index) in overdueTasks" v-if = "index < limitation"
                                                   :key = "task.id"
                                                   :index = "index"
                                                   :id = "task.id"
@@ -43,7 +43,7 @@
     },
     computed: {
       ...mapGetters([
-        'tasks',
+        'overdueTasks',
       ]),
     },
     methods: {
@@ -51,21 +51,21 @@
         let sortType = type;
         switch(sortType){
           case 'default-sort':
-          let sortedTasksDefult = this.tasks.slice().sort((a, b) => b.id - a.id);
-            for (let [index, task] of sortedTasksDefult.entries()){
-              this.$set(this.tasks, index, task)
+          let sortedoverdueTasksDefult = this.overdueTasks.slice().sort((a, b) => b.id - a.id);
+            for (let [index, task] of sortedoverdueTasksDefult.entries()){
+              this.$set(this.overdueTasks, index, task)
             }
             break;
           case 'up-sort':
-            let sortedTasksUp = this.tasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
-            for (let [index, task] of sortedTasksUp.entries()){
-              this.$set(this.tasks, index, task);
+            let sortedoverdueTasksUp = this.overdueTasks.slice().sort((a, b) => moment(b.due_date).unix() - moment(a.due_date).unix());
+            for (let [index, task] of sortedoverdueTasksUp.entries()){
+              this.$set(this.overdueTasks, index, task);
             }
             break;
           case 'down-sort':
-            let sortedTasksDown = this.tasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
-            for (let [index, task] of sortedTasksDown.entries()){
-              this.$set(this.tasks, index, task);
+            let sortedoverdueTasksDown = this.overdueTasks.slice().sort((a, b) => moment(a.due_date).unix() - moment(b.due_date).unix());
+            for (let [index, task] of sortedoverdueTasksDown.entries()){
+              this.$set(this.overdueTasks, index, task);
             }
             break;
         }

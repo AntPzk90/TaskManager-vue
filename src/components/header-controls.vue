@@ -2,7 +2,7 @@
   <section class="main__control control container">
     <h1 class="control__title">TASKMANAGER</h1>
     <section class="control__btn-wrap">
-      <input
+      <!-- <input
         type="radio"
         name="control"
         id="control__new-task"
@@ -10,6 +10,9 @@
       />
       <label for="control__new-task" class="control__label control__label--new-task" @click = "createTask"
         >+ ADD NEW TASK</label
+      > -->
+      <button class="control__btn-add control__label--new-task" @click = "createTask"
+        >+ ADD NEW TASK</button
       >
       <input
         type="radio"
@@ -41,7 +44,8 @@
     },
     methods: {
       createTask () {
-        this.$store.dispatch('crateTask');
+        const newId = this.$store.state.tasks.length.toString();
+        this.$store.dispatch('crateTask', newId);
       }
     }
   }
