@@ -17,4 +17,4 @@ npm run build
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
 # TaskManager-vue
-https://antpzk90.github.io/all
+https://antpzk90.github.io/TaskManager-vue/
