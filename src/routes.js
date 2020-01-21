@@ -17,7 +17,7 @@ import boardContainerToday from './components/board-container-today';
 import boardContainerOverdue from './components/board-container-overdue';
 const routes = [
   {
-		path: 'https://antpzk90.github.io/TaskManager-vue/',
+		path: '/',
     component: boardContainer,
 	},
 	{
